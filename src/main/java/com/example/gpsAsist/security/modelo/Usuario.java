@@ -7,7 +7,9 @@ package com.example.gpsAsist.security.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -69,12 +71,25 @@ public class Usuario implements Serializable {
         @JoinColumn(name = "idUsuario", referencedColumnName = "ID_USUARIO", nullable = false)}, inverseJoinColumns = {
         @JoinColumn(name = "idTipo", referencedColumnName = "ID_TIPOUSER", nullable = false)})
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Tipousuario> tipousuarioList;
+    private Set<Tipousuario> tipousuarioList = new HashSet<>();
 
     public Usuario() {
     }
+    
 
-    public Usuario(Integer idUsuario) {
+    public Usuario(String nombreUser, String contraseña, Integer tipo, String nombreCompleto, Date fecha,
+			String disposi) {
+		super();
+		this.nombreUser = nombreUser;
+		this.contraseña = contraseña;
+		this.tipo = tipo;
+		this.nombreCompleto = nombreCompleto;
+		this.fecha = fecha;
+		this.disposi = disposi;
+	}
+
+
+	public Usuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -135,15 +150,17 @@ public class Usuario implements Serializable {
     }
 
     
-    public List<Tipousuario> getTipousuarioList() {
-        return tipousuarioList;
-    }
+    
 
-    public void setTipousuarioList(List<Tipousuario> tipousuarioList) {
-        this.tipousuarioList = tipousuarioList;
-    }
+    public Set<Tipousuario> getTipousuarioList() {
+		return tipousuarioList;
+	}
 
-    @Override
+	public void setTipousuarioList(Set<Tipousuario> tipousuarioList) {
+		this.tipousuarioList = tipousuarioList;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idUsuario != null ? idUsuario.hashCode() : 0);
