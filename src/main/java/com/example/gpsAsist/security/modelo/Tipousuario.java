@@ -20,7 +20,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-
 /**
  *
  * @author SNC-CHINANDEGA
@@ -29,9 +28,9 @@ import javax.validation.constraints.Size;
 @Table(name = "tipousuario", catalog = "rrhh", schema = "")
 
 @NamedQueries({
-    @NamedQuery(name = "Tipousuario.findAll", query = "SELECT t FROM Tipousuario t"),
-    @NamedQuery(name = "Tipousuario.findByIdTipouser", query = "SELECT t FROM Tipousuario t WHERE t.idTipouser = :idTipouser"),
-    @NamedQuery(name = "Tipousuario.findByTipo", query = "SELECT t FROM Tipousuario t WHERE t.tipo = :tipo")})
+        @NamedQuery(name = "Tipousuario.findAll", query = "SELECT t FROM Tipousuario t"),
+        @NamedQuery(name = "Tipousuario.findByIdTipouser", query = "SELECT t FROM Tipousuario t WHERE t.idTipouser = :idTipouser"),
+        @NamedQuery(name = "Tipousuario.findByTipo", query = "SELECT t FROM Tipousuario t WHERE t.tipo = :tipo") })
 public class Tipousuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,7 +68,6 @@ public class Tipousuario implements Serializable {
         this.tipo = tipo;
     }
 
-   
     public List<Usuario> getUsuarioList() {
         return usuarioList;
     }
@@ -87,12 +85,12 @@ public class Tipousuario implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Tipousuario)) {
             return false;
         }
         Tipousuario other = (Tipousuario) object;
-        if ((this.idTipouser == null && other.idTipouser != null) || (this.idTipouser != null && !this.idTipouser.equals(other.idTipouser))) {
+        if ((this.idTipouser == null && other.idTipouser != null)
+                || (this.idTipouser != null && !this.idTipouser.equals(other.idTipouser))) {
             return false;
         }
         return true;
@@ -102,5 +100,5 @@ public class Tipousuario implements Serializable {
     public String toString() {
         return "com.example.gpsAsist.security.modelo.Tipousuario[ idTipouser=" + idTipouser + " ]";
     }
-    
+
 }
