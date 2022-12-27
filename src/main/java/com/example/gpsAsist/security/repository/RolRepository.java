@@ -9,6 +9,6 @@ import com.example.gpsAsist.security.modelo.Tipousuario;
 
 @Repository
 public interface RolRepository extends JpaRepository<Tipousuario, Integer> {
-    Optional<Tipousuario> findByTipo(String tipo);
+    Optional<Tipousuario> findByTipo(Tipousuario tipousuario);
 
 }

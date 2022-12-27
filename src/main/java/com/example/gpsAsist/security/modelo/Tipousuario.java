@@ -10,6 +10,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,6 +43,7 @@ public class Tipousuario implements Serializable {
     private Integer idTipouser;
     @Size(max = 50)
     @Column(name = "TIPO", length = 50)
+    @Enumerated(EnumType.STRING)
     private String tipo;
     @ManyToMany(mappedBy = "tipousuarioList", fetch = FetchType.LAZY)
     private List<Usuario> usuarioList;

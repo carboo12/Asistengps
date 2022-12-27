@@ -19,4 +19,20 @@ public class UsuarioServices {
         return usuarioRepository.findByNombreUser(nombreUsuario);
     }
 
+    public boolean existNombreUsurio(String nombreUsuario) {
+        return usuarioRepository.existfindByNombreUser(nombreUsuario);
+    }
+
+    public boolean existNombreCompleto(String NombreCompleto) {
+        return usuarioRepository.existfindByNombreCompleto(NombreCompleto);
+    }
+
+    public void guardar(Usuario usuario) {
+        usuarioRepository.save(usuario);
+    }
+
+    public void BorrarUsu(Usuario usuario) {
+        usuarioRepository.delete(usuario);
+    }
+
 }
