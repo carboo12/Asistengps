@@ -4,12 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.gpsAsist.security.jwt.jwtEntryPoint;
@@ -28,8 +33,7 @@ public class MainSecurity {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authz) throws Exception {
-		return http
-				.csrf().disable()
+		return http.csrf().disable()
 				.authorizeRequests()
 				.anyRequest()
 				.authenticated()
@@ -42,12 +46,36 @@ public class MainSecurity {
 				.build();
 	}
 
-	public jwtTokenFilter tokenFilter() {
-		return new jwtTokenFilter();
+	@Bean
+	public UserDetailsService userDetailsService() {
+		InMemoryUserDetailsManager detailsManager = new InMemoryUserDetailsManager();
+		detailsManager.createUser(User.withUsername("Administrador")
+				.password(passwordEncoder().encode("userPass"))
+				.roles("ROLE_Administrador")
+				.build());
+		return detailsManager;
 	}
 
+	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
+	public jwtTokenFilter tokenFilter() {
+		return new jwtTokenFilter();
+	}
+
+	/**
+	 * @param security
+	 * @param encoder
+	 * @return
+	 */
+	@Bean
+	public AuthenticationManager manager(HttpSecurity security) {
+		return security.getSharedObject(AuthenticationManagerBuilder.class)
+				.userDetailsService(userDetailsService())
+				.passwordEncoder(passwordEncoder())
+				.and()
+				.build();
+	}
 }
