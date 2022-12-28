@@ -17,41 +17,35 @@ import com.example.gpsAsist.security.jwt.jwtEntryPoint;
 import com.example.gpsAsist.security.jwt.jwtTokenFilter;
 import com.example.gpsAsist.security.services.UsuarioDetailServiceImp;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class MainSecurity  extends WebSecurityConfiguration{
-	
+public class MainSecurity extends WebSecurityConfiguration {
+
 	@Autowired
 	UsuarioDetailServiceImp usuarioDetailServiceImp;
 	@Autowired
 	jwtEntryPoint entryPoint;
-	
+
 	@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests((authz) -> authz
-                .anyRequest().authenticated()
-            )
-            .httpBasic(withDefaults());
-        return http.build();
-    }
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http
+				.authorizeHttpRequests((authz) -> authz
+						.anyRequest().authenticated())
+				.httpBasic(withDefaults());
+		return http.build();
+	}
 
 	private Customizer<HttpBasicConfigurer<HttpSecurity>> withDefaults() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	public jwtTokenFilter tokenFilter() {
 		return new jwtTokenFilter();
 	}
-	
+
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	
-
 
 }
